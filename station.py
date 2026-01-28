@@ -4,13 +4,12 @@ import time
 import os
 
 # ---------------- CONFIG ----------------
-INPUT_CSV = "agra_metro_stations.csv"
-OUTPUT_CSV = "output/agra_metro_fares.csv"  # SAME FILE
+INPUT_CSV = "Stations.csv"
+OUTPUT_CSV = "output/Fares.csv"  # SAME FILE
 BASE_URL = "https://portal.upmetrorail.com/en/api/v2/route"
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0",
-    "Accept": "application/json"
 }
 
 REQUEST_DELAY = 0.5
