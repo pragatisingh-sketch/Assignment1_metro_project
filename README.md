@@ -12,7 +12,7 @@ This project represents data related to a metro system using Python. It loads me
 2. [Features](#features)  
 3. [Dataset](#dataset)  
 4. [Installation](#installation)  
-6. [Project Structure and flowchart](#project-structure-and-flowchart)
+6. [Project Structure ](#project-structure)
 7. [Usage](#usage)
 8. [Explanation of `station.py` (Important Logic)]
 9. [Dependencies](#dependencies)
@@ -54,105 +54,13 @@ id, station_code, station_name
    git clone https://github.com/pragatisingh-sketch/Assignment1_metro_project.git
    cd Assignment1_metro_project
 
-## 🗂️ Project Structure and flow 
+## 🗂️ Project Structure
 Assignment1_metro_project/
 ├── .venv/                # Python virtual environment folder
 ├── output/               # Results or demo outputs
 ├── Stations.csv          # Metro stations data
 ├── station.py            # Python code
 └── README.md             # (This file)
-
-+--------------------+
-|   Start Script     |
-+--------------------+
-          |
-          v
-+--------------------+
-| Read Stations.csv  |
-+--------------------+
-          |
-          v
-+------------------------------+
-| Extract station codes & names|
-+------------------------------+
-          |
-          v
-+------------------------------+
-| Initialize empty result list |
-+------------------------------+
-          |
-          v
-+------------------------------+
-| Select Source Station        |
-+------------------------------+
-          |
-          v
-+------------------------------+
-| Select Destination Station   |
-+------------------------------+
-          |
-          v
-+------------------------------+
-| Source == Destination ?      |
-+------------------------------+
-      | Yes              | No
-      v                  v
-+-----------+    +----------------------+
-| Skip Pair |    | Build API URL        |
-+-----------+    +----------------------+
-                           |
-                           v
-                  +----------------------+
-                  | Send API Request     |
-                  +----------------------+
-                           |
-                           v
-                  +----------------------+
-                  | Response OK ?        |
-                  +----------------------+
-                      | No        | Yes
-                      v           v
-                 +---------+  +----------------------+
-                 | Skip    |  | Parse JSON Response  |
-                 +---------+  +----------------------+
-                                      |
-                                      v
-                        +-------------------------------+
-                        | Extract fare, time & path     |
-                        +-------------------------------+
-                                      |
-                                      v
-                        +-------------------------------+
-                        | Get intermediate stations     |
-                        +-------------------------------+
-                                      |
-                                      v
-                        +-------------------------------+
-                        | Store data in result list     |
-                        +-------------------------------+
-                                      |
-                                      v
-                        +-------------------------------+
-                        | Wait (REQUEST_DELAY)          |
-                        +-------------------------------+
-                                      |
-                                      v
-                        (Repeat for all station pairs)
-                                      |
-                                      v
-+------------------------------+
-| Create output folder         |
-+------------------------------+
-          |
-          v
-+------------------------------+
-| Write data to Fares.csv      |
-+------------------------------+
-          |
-          v
-+--------------------+
-|   End Script       |
-+--------------------+
 
 
 ## 🧠 Usage 
