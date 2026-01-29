@@ -1,13 +1,3 @@
-Bilkul 👍 — issue **Markdown formatting ka hai**, isliye GitHub par “nahi chal raha”.
-Main neeche **FIXED & WORKING README.md CODE** de raha hoon.
-👉 **Isko poora copy-paste karo**, kuch bhi miss mat karna.
-
----
-
-## ✅ **CORRECT & WORKING `README.md` CODE**
-
-````markdown
-# 🚇 Assignment 1: Metro Route & Fare Data Automation
 
 ## 📌 Project Overview
 
