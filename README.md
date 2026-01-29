@@ -139,3 +139,73 @@ flowchart TD
     P -->|All sources done| Q[Create output folder]
     Q --> R[Write Fares.csv]
     R --> S[End Script]
+## 📂 Project Structure
+
+| File / Folder | Description |
+| :--- | :--- |
+| `Stations.csv` | **Input Dataset**. Contains metro station codes and station names used for route generation. |
+| `station.py` | **Core Processing Script**. Fetches route, fare, travel time, and intermediate station data using the UPMRC API. |
+| `output/Fares.csv` | **Generated Output**. Stores processed source–destination route details in CSV format. |
+| `README.md` | Project documentation and explanation. |
+
+---
+
+## 🛠️ Installation & Setup
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/pragatisingh-sketch/Assignment1_metro_project.git
+   cd Assignment1_metro_project
+(Optional) Create and activate a virtual environment:
+
+python -m venv .venv
+source .venv/bin/activate   # Linux / Mac
+.venv\Scripts\activate      # Windows
+
+
+Install required dependencies:
+
+pip install pandas requests
+
+🏃 Execution Guide
+
+Run the main script to generate metro route data:
+
+python station.py
+
+
+The script will:
+
+Read station data from Stations.csv
+
+Call the UPMRC API for all station pairs
+
+Extract fare, time, and intermediate station details
+
+Save the processed data into output/Fares.csv
+
+🔍 Output Data Details
+
+The generated CSV file contains the following fields:
+
+Source station code and name
+
+Destination station code and name
+
+Fare
+
+Total travel time
+
+Intermediate station count
+
+Intermediate station names
+
+This data can be directly used for:
+
+Data analysis
+
+Dashboards
+
+Transport planning
+
+ERP or metro information systems
