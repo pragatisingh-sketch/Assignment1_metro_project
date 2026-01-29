@@ -1,201 +1,185 @@
+# 🚇 Assignment 1: Metro Route & Fare Data Automation
 
+## 📌 Project Overview
 
-**A metro network simulation project in Python**  
+This project is a Python-based automation system that collects **metro route, fare, total travel time, and intermediate station details** using the **UP Metro Rail (UPMRC) public API**.
 
-This project represents data related to a metro system using Python. It loads metro stations from a dataset and provides functionality to work with the stations programmatically.
-
----
-
-## 🧾 Table of Contents
-
-1. [Overview](#overview)  
-2. [Features](#features)  
-3. [Dataset](#dataset)  
-4. [Installation](#installation)  
-6. [Project Structure ](#project-structure)
-7. [Usage](#usage)
-8. [Explanation of `station.py` (Important Logic)]
-9. [Dependencies](#dependencies)
-10. Explanation of station.py
-
+The script processes all possible source–destination station pairs, extracts relevant route information, and stores the results in a structured CSV file for analysis and reuse.
 
 ---
 
-## 📌 Overview
+## 🎯 Objective
 
-This project is a **Python-based agra metro** data processor that uses a CSV file (stations list) and code (`station.py`) to load and manipulate station data.
-The intent is to practice programming concepts and handling metro system information.
+- Automate metro route and fare data collection  
+- Eliminate manual data gathering  
+- Demonstrate API integration and data processing  
+- Generate a clean and reusable dataset  
 
 ---
 
-## 🔍 Features
+## 🧠 Overview of `station.py`
 
-- Loads metro station data from `Stations.csv`  
-- Represents each station using a Python class  
-- Outputs results or logs to the `output/Fares.csv` directory  
+The `station.py` script reads station data from a CSV file, dynamically calls the UPMRC API for each station pair, extracts route information, applies rate limiting, and stores the processed data into a CSV file.
 
-## 📋 Dataset
+---
 
-The dataset `Stations.csv` contains the list of metro stations and related information that the Python script uses.
-For example ---
-id, station_code, station_name
-1,  TEGT,         TAJ EAST GATE
-2,  SCSG,         SHAHEED CAPTAIN SHUBHAM GUPTA
-3,  FTBR,         FATEHABAD ROAD
-34, TJML,         TAJ MAHAL
-35, AFTM,         AGRA FORT
-36, MKM,          MANKAMESHWAR MANDIR
+## 🔧 Technologies & Libraries Used
 
+- **Python 3**
+- **requests** – API calls  
+- **pandas** – CSV handling and data processing  
+- **time** – Rate limiting  
+- **os** – Directory management  
 
-## 🚀 Installation
+---
 
- **Clone the repository**
+## ⚙️ Configuration Details
 
-   git clone https://github.com/pragatisingh-sketch/Assignment1_metro_project.git
-   cd Assignment1_metro_project
+- **Input File:** `Stations.csv`  
+- **Output File:** `output/Fares.csv`  
+- **API:** UPMRC Route API  
+- **Request Delay:** 0.5 seconds  
 
-## 🗂️ Project Structure
+---
+
+## 🔄 Explanation of `station.py` (Important Logic)
+
+### 📌 Purpose of the Script
+
+`station.py` automatically fetches metro route, fare, travel time, and intermediate station details between all station pairs using the official UPMRC API and saves the processed data into a CSV file.
+
+---
+
+### 🔧 Imports Used
+
+- `requests` – API communication  
+- `pandas` – Data processing  
+- `time` – API rate limiting  
+- `os` – Output folder creation  
+
+---
+
+### 🌐 API URL Builder Function
+
+- Dynamically creates API URLs for any source → destination  
+- Uses least-distance route logic  
+- Improves modularity and readability  
+
+---
+
+### 📥 Reading Station Data
+
+- Reads `Stations.csv`
+- Extracts station codes and names
+- Creates a lookup dictionary for fast access  
+
+---
+
+### 🔁 Core Processing Logic
+
+- Uses nested loops to generate **all station combinations**
+- Skips same source and destination
+- Total API calls: `N × (N − 1)`
+- Ensures complete network traversal  
+
+---
+
+### 📡 API Handling & Data Extraction
+
+- Sends API requests with headers and timeout  
+- Skips failed responses safely  
+- Extracts fare, total travel time, and station path  
+
+---
+
+### 🚏 Intermediate Station Logic
+
+- Removes source and destination stations
+- Stores only intermediate stops  
+
+---
+
+### 📁 Output Handling
+
+- Automatically creates `output/` folder
+- Writes results to `output/Fares.csv`
+- Overwrites old data to keep output updated  
+
+---
+
+## 📊 Flowchart of `station.py`
+
+```mermaid
+flowchart TD
+    A[Start Script] --> B[Read Stations.csv]
+    B --> C[Extract station codes & names]
+    C --> D[Initialize results list]
+
+    D --> E[Select Source Station]
+    E --> F[Select Destination Station]
+
+    F --> G{Source == Destination?}
+    G -- Yes --> F
+    G -- No --> H[Build API URL]
+
+    H --> I[Send API Request]
+    I --> J{Response OK?}
+
+    J -- No --> F
+    J -- Yes --> K[Parse JSON Response]
+
+    K --> L[Extract fare, time & path]
+    L --> M[Extract intermediate stations]
+    M --> N[Store result]
+
+    N --> O[Wait REQUEST_DELAY]
+    O --> F
+
+    F -->|All destinations done| P[Next source]
+    P -->|All sources done| Q[Create output folder]
+    Q --> R[Write Fares.csv]
+    R --> S[End Script]
+
+## 📁 Project Structure
+
 Assignment1_metro_project/
-├── .venv/                # Python virtual environment folder
-├── output/               # Results or demo outputs
-├── Stations.csv          # Metro stations data
-├── station.py            # Python code
-└── README.md             # (This file)
+├── Stations.csv # Input file containing station codes and names
+├── station.py # Main Python script
+├── output/
+│ └── Fares.csv # Generated output CSV file
+└── README.md # Project documentation
 
 
-## 🧠 Usage 
+---
+
+## 🚀 How to Run the Project
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/pragatisingh-sketch/Assignment1_metro_project.git
+Navigate to the project directory:
+
+cd Assignment1_metro_project
+Install required dependencies:
+
+pip install pandas requests
+Run the script:
 
 python station.py
+✅ Final Output
+After successful execution, the script generates the following file:
 
+output/Fares.csv
+The output CSV contains:
+Source station code and name
 
-## Explanation of `station.py` (Important Logic)
+Destination station code and name
 
+Fare
 
-`station.py` automatically fetches **metro route, fare, travel time, and intermediate station details** for **all possible station pairs** using the official **UPMRC API** and 
-stores the processed data in a CSV file.
+Total travel time
 
-This demonstrates:
+Intermediate station count
 
-* API integration
-* Automated data processing
-* Real-world data engineering concepts
-
----
-
-🔧 Imports Used (Why They Matter)
-
-* **requests** – Calls the metro route API
-* **pandas** – Reads input CSV and generates output CSV
-* **time** – Adds delay between API calls (rate limiting)
-* **os** – Handles output directory creation
-
----
-
- ⚙️ Configuration Section
-
-* `Stations.csv` → Input station data
-* `output/Fares.csv` → Output file
-* Centralized API base URL for easy reuse
-
-`REQUEST_DELAY = 0.5` ensures responsible API usage and avoids server blocking.
-
----
-
- 🌐 API URL Builder Function
-
-* Dynamically generates API URLs for **any source → destination**
-* Uses **least-distance route logic**
-* Keeps the code modular and readable
-
----
-
- 📥 Reading Station Data
-
-* Reads station codes and names from `Stations.csv`
-* Creates a lookup dictionary for fast station code → name mapping
-
----
-
- 🔁 Core Logic: Nested Loop
-
-* Iterates through **all station combinations**
-* Skips same source and destination
-* Total API calls:
-
-  ```
-  N × (N − 1)
-  ```
-* Ensures complete metro network traversal
-
----
-
- 📡 API Request Handling
-
-* Sends GET requests with timeout and headers
-* Skips failed or invalid responses safely
-* Prevents crashes using error handling
-
----
-
- 🧾 JSON Data Extraction
-
-From the API response, the script extracts:
-
-* Fare
-* Total travel time
-* Complete station path
-
----
-
- 🚏 Intermediate Station Logic
-
-* Removes source and destination stations
-* Stores only intermediate stops
-* Useful for route analysis and network optimization
-
- 🗃️ Structured Result Storage
-
-Each route is stored with:
-
-* Source & destination codes and names
-* Fare and total time
-* Intermediate station count and names
-
-The data is CSV-ready and well structured.
-
- ⏳ Rate Limiting
-
-* Adds delay between API calls
-* Prevents API abuse
-* Follows production-grade best practices
-
- 📁 Output Handling
-
-* Automatically creates the `output/` directory
-* Writes all results to `output/Fares.csv`
-* Overwrites old data to keep output updated
-
-
-
-### ✅ Final Outcome
-
-The script generates a CSV containing:
-
-* All source → destination routes
-* Fare and travel time
-* Intermediate station details
-
-This output can be used for **analysis, dashboards, ERP systems, and metro planning tools**.
-Database Drive link --
-https://drive.google.com/file/d/199p42IpLONUWAauu7_sulHTaj7_P5rrD/view?usp=sharing
-
-
-## 📦 Dependencies
-
-This project uses basic Python libraries. If you used any external packages, list them here (e.g., pandas, numpy).
-
-## ✉️ Contact
-
-Created by Pragati Singh — feel free to reach out on GitHub.
-
+Intermediate station names
 
